@@ -12,37 +12,33 @@
   </head>
   <body>
     <main class="container mt-5">
-      <h1 class="text-center mb-4">Ingredients</h1>
+      <h1 class="text-center mb-4">Categories</h1>
 
-      <!-- Add New Ingredient Button -->
+      <!-- Add New Category Button -->
       <div class="text-end mb-3">
-        <a href="/ingredients/new" class="btn btn-success">+ Add New Ingredient</a>
+        <a href="/categories/add" class="btn btn-success">+ Add New Category</a>
       </div>
 
-      <!-- Ingredients Table -->
+      <!-- Category Table -->
       <div class="card">
         <div class="card-header">
-          <h2 class="mb-0">All Ingredients</h2>
+          <h2 class="mb-0">All Categories</h2>
         </div>
         <table class="table table-striped">
           <thead>
             <tr>
               <th>Name</th>
-              <th>Price</th>
-              <th>Category</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <% if (ingredients && ingredients.length > 0) { %>
-              <% ingredients.forEach((ingredient) => { %>
+            <% if (categories && categories.length > 0) { %>
+              <% categories.forEach((category) => { %>
                 <tr>
-                  <td><%= ingredient.name %></td>
-                  <td>€<%= ingredient.price %></td>
-                  <td><%= ingredient.category %></td>
+                  <td><%= category.name %></td>
                   <td>
-                    <a href="/ingredients/<%= ingredient.id %>/edit" class="btn btn-primary btn-sm">Edit</a>
-                    <form action="/ingredients/<%= ingredient.id %>?_method=DELETE" method="POST" class="d-inline">
+                    <a href="/categories/<%= category.category_id %>/edit" class="btn btn-primary btn-sm">Edit</a>
+                    <form action="/categories/<%= category.category %>?_method=DELETE" method="POST" class="d-inline">
                       <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                     </form>
                   </td>
@@ -50,7 +46,7 @@
               <% }) %>
             <% } else { %>
               <tr>
-                <td colspan="4" class="text-center">No ingredients found.</td>
+                <td colspan="4" class="text-center">No categories found.</td>
               </tr>
             <% } %>
           </tbody>

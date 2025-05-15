@@ -18,8 +18,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 // Routes importeren (bijvoorbeeld ingrediëntenlijst)
-import ingredientsRoutes from './routes/ingredients';       //werkt nog niet want je moet nog iets exporteren in ingredients.ts
+import ingredientsRoutes from './routes/ingredients';
 app.use('/ingredients', ingredientsRoutes);           // Route beschikbaar maken op /ingredients
+
+import categoryRoutes from './routes/categories';
+app.use('/categories', categoryRoutes);           // Route beschikbaar maken op /categories
 
 // Als iemand naar de hoofdpagina / gaat, doorsturen naar /ingredients
 app.get('/', (req, res) => {
