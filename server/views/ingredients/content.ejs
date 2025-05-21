@@ -1,0 +1,43 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h2 class="mb-0">All Ingredients</h2>
+    <a href="/ingredients/add" class="btn btn-primary">Add Ingredient</a>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (ingredients && ingredients.length > 0) { %>
+            <% ingredients.forEach((ingredient) => { %>
+              <tr>
+                <td><%= ingredient.name %></td>
+                <td>€<%= ingredient.price %></td>
+                <td><%= ingredient.category %></td>
+                <td>
+                  <div class="btn-group" role="group">
+                    <a href="/ingredients/<%= ingredient.ingredient_id %>/edit" class="btn btn-sm btn-warning">Edit</a>
+                    <form action="/ingredients/<%= ingredient.ingredient_id %>/delete" method="POST" class="d-inline">
+                      <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+            <tr>
+              <td colspan="5" class="text-center">No ingredients found.</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

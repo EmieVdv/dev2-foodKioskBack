@@ -1,0 +1,28 @@
+<div class="sidebar bg-dark text-white">
+  <div class="sidebar-header p-3">
+    <h3>Dough & Drizzle</h3>
+    <h5>Backoffice</h5>
+  </div>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link text-white <%= path === '/dashboard' ? 'active' : '' %>" href="/dashboard">
+        <i class="bi bi-speedometer2 me-2"></i> Dashboard
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white <%= path === '/orders' ? 'active' : '' %>" href="/orders">
+        <i class="bi bi-cart me-2"></i> Orders
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white <%= path === '/categories' ? 'active' : '' %>" href="/categories">
+        <i class="bi bi-tags me-2"></i> Categories
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-white <%= path === '/ingredients' ? 'active' : '' %>" href="/ingredients">
+        <i class="bi bi-egg-fried me-2"></i> Ingredients
+      </a>
+    </li>
+  </ul>
+</div>

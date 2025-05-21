@@ -18,6 +18,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 
 // Routes importeren (bijvoorbeeld ingrediëntenlijst)
+import dashboardRoutes from './routes/dashboard';
+app.use('/dashboard', dashboardRoutes);
+
 import ingredientsRoutes from './routes/ingredients';
 app.use('/ingredients', ingredientsRoutes);           // Route beschikbaar maken op /ingredients
 
@@ -29,7 +32,7 @@ app.use('/orders', ordersRoutes);
 
 // Als iemand naar de hoofdpagina / gaat, doorsturen naar /ingredients
 app.get('/', (req, res) => {
-  res.redirect('/ingredients');
+  res.redirect('/dashboard');
 });
 
 // Start de server

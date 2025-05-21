@@ -9,7 +9,12 @@ router.get('/', async (req: Request, res: Response) => {
     SELECT * FROM orders
     ORDER BY created_at DESC
   `;
-  res.render('orders/index', { orders });
+  // Moet erbij om de volledige layout met sidebar te zien
+  res.render('orders/index', { 
+    orders,
+    title: 'Orders',
+    path: '/orders'
+  });
 });
 
 //  Show a single order with its products
