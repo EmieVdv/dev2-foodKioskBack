@@ -7,7 +7,7 @@
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
-    "postgres": "^3.4.5"
+    "postgres": "^3.4.6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -20,7 +20,7 @@
     "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.1",
     "nodemon": "^3.1.10",
-    "supabase": "^2.22.12",
+    "supabase": "^2.23.4",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"

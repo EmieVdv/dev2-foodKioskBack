@@ -22,7 +22,7 @@ import ingredientsRoutes from './routes/ingredients';
 app.use('/ingredients', ingredientsRoutes);           // Route beschikbaar maken op /ingredients
 
 import categoryRoutes from './routes/categories';
-app.use('/categories', categoryRoutes);           // Route beschikbaar maken op /categories
+app.use('/categories', categoryRoutes);
 
 // Als iemand naar de hoofdpagina / gaat, doorsturen naar /ingredients
 app.get('/', (req, res) => {
