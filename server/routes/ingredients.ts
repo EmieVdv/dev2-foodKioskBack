@@ -5,12 +5,9 @@ const router = Router();
 
 // Show all ingredients
 router.get('/', async (req: Request, res: Response) => {
-  // Joinen met categories omdat we de id ophalen en die willen linken aan de naam
   const ingredients = await sql`
-    SELECT i.*, c.name as category_name 
-    FROM ingredients i
-    LEFT JOIN categories c ON i.category_id = c.category_id
-    ORDER BY category_id, i.name
+    SELECT * FROM ingredients
+    ORDER BY category_id, name
   `;
   res.render('ingredients/index', { ingredients });
 });
@@ -25,9 +22,13 @@ router.get('/add', async (req: Request, res: Response) => {
 router.post('/', async (req: Request, res: Response) => {
   const { name, price, category_id } = req.body;
   try {
+    const [category] = await sql`
+      SELECT name FROM categories WHERE category_id = ${category_id}
+    `;
+
     await sql`
-      INSERT INTO ingredients (name, price, category_id)
-      VALUES (${name}, ${price}, ${category_id})
+      INSERT INTO ingredients (name, price, category_id, category)
+      VALUES (${name}, ${price}, ${category_id}, ${category.name})
     `;
     res.redirect('/ingredients');
   } catch (error) {
@@ -56,9 +57,13 @@ router.get('/:id/edit', async (req: Request, res: Response) => {
 router.post('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, price, category_id } = req.body;
+  
+  const [category] = await sql`
+    SELECT name FROM categories WHERE category_id = ${category_id}
+  `;
   await sql`
     UPDATE ingredients
-    SET name = ${name}, price = ${price}, category_id = ${category_id}
+    SET name = ${name}, price = ${price}, category_id = ${category_id}, category = ${category.name}
     WHERE ingredient_id = ${id}
   `;
   res.redirect('/ingredients');
