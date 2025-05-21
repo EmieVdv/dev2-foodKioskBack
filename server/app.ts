@@ -24,6 +24,9 @@ app.use('/ingredients', ingredientsRoutes);           // Route beschikbaar maken
 import categoryRoutes from './routes/categories';
 app.use('/categories', categoryRoutes);
 
+import ordersRoutes from './routes/orders';
+app.use('/orders', ordersRoutes);
+
 // Als iemand naar de hoofdpagina / gaat, doorsturen naar /ingredients
 app.get('/', (req, res) => {
   res.redirect('/ingredients');
