@@ -32,7 +32,7 @@ app.use('/categories', categoryRoutes);
 import ordersRoutes from './routes/orders';
 app.use('/orders', ordersRoutes);
 
-// Als iemand naar de hoofdpagina / gaat, doorsturen naar /ingredients
+// Als iemand naar de hoofdpagina / gaat, doorsturen naar /dashboard
 app.get('/', (req, res) => {
   res.redirect('/dashboard');
 });
