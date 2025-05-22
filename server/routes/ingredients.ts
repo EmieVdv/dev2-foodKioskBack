@@ -2,11 +2,21 @@ import { Router, Request, Response } from 'express';
 import sql from '../services/db';
 import multer from 'multer';
 import path from 'path';
+import fs from 'fs';
+
+const router = Router();
+
+const uploadDir = path.resolve(process.cwd(), 'public', 'images');
+
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+  console.log(`Created upload directory: ${uploadDir}`);
+}
 
 // Configuratie voor image storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "..", "..", "public", "images")); // Zorg dat deze map bestaat
+    cb(null, uploadDir); 
   },
   filename: (req, file, cb) => {
     const uniqueName = `${Date.now()}-${file.originalname}`;
@@ -16,7 +26,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-const router = Router();
 
 // Show all ingredients
 router.get('/', async (req: Request, res: Response) => {
@@ -71,19 +80,31 @@ router.get('/:id/edit', async (req: Request, res: Response) => {
 });
 
 // Handle update of an ingredient
-router.post('/:id', async (req: Request, res: Response) => {
+router.post('/:id', upload.single("image"), async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, price, category_id } = req.body;
   
   const [category] = await sql`
     SELECT name FROM categories WHERE category_id = ${category_id}
   `;
-  await sql`
-    UPDATE ingredients
-    SET name = ${name}, price = ${price}, category_id = ${category_id}, category = ${category.name}
-    WHERE ingredient_id = ${id}
-  `;
-  res.redirect('/ingredients');
+   // Check if a new image was uploaded
+    if (req.file) {
+      await sql`
+        UPDATE ingredients
+        SET name = ${name}, price = ${price}, category_id = ${category_id}, 
+            category = ${category.name}, image_url = ${req.file.filename}
+        WHERE ingredient_id = ${id}
+      `;
+    } else {
+      await sql`
+        UPDATE ingredients
+        SET name = ${name}, price = ${price}, category_id = ${category_id}, 
+            category = ${category.name}
+        WHERE ingredient_id = ${id}
+      `;
+    }
+    
+    res.redirect('/ingredients');
 });
 
 // Handle delete (via POST)
