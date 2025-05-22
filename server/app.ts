@@ -24,6 +24,8 @@ app.use('/dashboard', dashboardRoutes);
 import ingredientsRoutes from './routes/ingredients';
 app.use('/ingredients', ingredientsRoutes);           // Route beschikbaar maken op /ingredients
 
+app.use('/images', express.static(path.join(__dirname, '..', 'public', 'images')));
+
 import categoryRoutes from './routes/categories';
 app.use('/categories', categoryRoutes);
 

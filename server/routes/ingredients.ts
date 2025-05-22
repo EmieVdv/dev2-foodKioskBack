@@ -1,5 +1,20 @@
 import { Router, Request, Response } from 'express';
 import sql from '../services/db';
+import multer from 'multer';
+import path from 'path';
+
+// Configuratie voor image storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, "..", "..", "public", "images")); // Zorg dat deze map bestaat
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = `${Date.now()}-${file.originalname}`;
+    cb(null, uniqueName);
+  }
+});
+
+const upload = multer({ storage });
 
 const router = Router();
 
@@ -19,16 +34,18 @@ router.get('/add', async (req: Request, res: Response) => {
 });
 
 // Handle new ingredient creation
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', upload.single("image"), async (req: Request, res: Response) => {
   const { name, price, category_id } = req.body;
+  const image = req.file ? req.file.filename : null;
+
   try {
     const [category] = await sql`
       SELECT name FROM categories WHERE category_id = ${category_id}
     `;
 
     await sql`
-      INSERT INTO ingredients (name, price, category_id, category)
-      VALUES (${name}, ${price}, ${category_id}, ${category.name})
+      INSERT INTO ingredients (name, price, category_id, category, image_url)
+      VALUES (${name}, ${price}, ${category_id}, ${category.name}, ${image})
     `;
     res.redirect('/ingredients');
   } catch (error) {
