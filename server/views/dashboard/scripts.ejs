@@ -1,10 +1,19 @@
 <script>
+// Debug logging
+console.log('Chart.js loaded:', typeof Chart !== 'undefined');
+console.log('Monthly Data:', <%- JSON.stringify(ordersByMonth) %>);
+console.log('Status Data:', <%- JSON.stringify(ordersByStatus) %>);
+
+// Wait for both DOM and Chart.js to be ready
+window.addEventListener('load', function() {
+  console.log('Window loaded, initializing charts...');
+  
   // Monthly chart
   const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const monthlyData = <%- JSON.stringify(ordersByMonth) %>;
   
   // Prepare data for chart
-  const months = Array(12).fill().map((_, i) => i + 1); //[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  const months = Array.from({ length: 12 }, (_, i) => i + 1);
   const orderCounts = Array(12).fill(0);
   const revenueData = Array(12).fill(0);
   
@@ -16,56 +25,72 @@
     }
   });
   
-  const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
-  new Chart(monthlyCtx, {
-    type: 'bar',
-    data: {
-      labels: months.map(m => monthNames[m-1]),
-      datasets: [
-        {
-          label: 'Orders',
-          data: orderCounts,
-          backgroundColor: 'rgba(54, 162, 235, 0.5)',
-          borderColor: 'rgba(54, 162, 235, 1)',
-          borderWidth: 1,
-          yAxisID: 'y'
-        },
-        {
-          label: 'Revenue (€)',
-          data: revenueData,
-          type: 'line',
-          fill: false,
-          borderColor: 'rgba(255, 99, 132, 1)',
-          tension: 0.1,
-          yAxisID: 'y1'
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      scales: {
-        y: {
-          beginAtZero: true,
-          position: 'left',
-          title: {
-            display: true,
-            text: 'Orders'
-          }
-        },
-        y1: {
-          beginAtZero: true,
-          position: 'right',
-          grid: {
-            drawOnChartArea: false
-          },
-          title: {
-            display: true,
-            text: 'Revenue (€)'
-          }
-        }
-      }
-    }
+  console.log('Monthly chart data:', {
+    labels: months.map(m => monthNames[m-1]),
+    orderCounts,
+    revenueData
   });
+  
+  const monthlyCtx = document.getElementById('monthlyChart');
+  console.log('Monthly chart canvas:', monthlyCtx);
+  
+  if (monthlyCtx) {
+    try {
+      const monthlyChart = new Chart(monthlyCtx.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: months.map(m => monthNames[m-1]),
+          datasets: [
+            {
+              label: 'Orders',
+              data: orderCounts,
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1,
+              yAxisID: 'y'
+            },
+            {
+              label: 'Revenue (€)',
+              data: revenueData,
+              type: 'line',
+              fill: false,
+              borderColor: 'rgba(255, 99, 132, 1)',
+              tension: 0.1,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              position: 'left',
+              title: {
+                display: true,
+                text: 'Orders'
+              }
+            },
+            y1: {
+              beginAtZero: true,
+              position: 'right',
+              grid: {
+                drawOnChartArea: false
+              },
+              title: {
+                display: true,
+                text: 'Revenue (€)'
+              }
+            }
+          }
+        }
+      });
+      console.log('Monthly chart created successfully');
+    } catch (error) {
+      console.error('Error creating monthly chart:', error);
+    }
+  }
   
   // Status chart
   const statusData = <%- JSON.stringify(ordersByStatus) %>;
@@ -80,25 +105,42 @@
     return 'rgba(108, 117, 125, 0.8)';
   });
   
-  const statusCtx = document.getElementById('statusChart').getContext('2d');
-  new Chart(statusCtx, {
-    type: 'doughnut',
-    data: {
-      labels: statusLabels,
-      datasets: [{
-        data: statusCounts,
-        backgroundColor: statusColors,
-        borderColor: 'white',
-        borderWidth: 1
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          position: 'bottom'
-        }
-      }
-    }
+  console.log('Status chart data:', {
+    labels: statusLabels,
+    counts: statusCounts,
+    colors: statusColors
   });
+  
+  const statusCtx = document.getElementById('statusChart');
+  console.log('Status chart canvas:', statusCtx);
+  
+  if (statusCtx) {
+    try {
+      const statusChart = new Chart(statusCtx.getContext('2d'), {
+        type: 'doughnut',
+        data: {
+          labels: statusLabels,
+          datasets: [{
+            data: statusCounts,
+            backgroundColor: statusColors,
+            borderColor: 'white',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      });
+      console.log('Status chart created successfully');
+    } catch (error) {
+      console.error('Error creating status chart:', error);
+    }
+  }
+});
 </script>

@@ -1,7 +1,43 @@
-<%- include('../partials/layout', {
-  title: 'Categories',
-  path: '/categories',
-  contentPath: 'categories/content',
-  scriptPath: null
-}) %>
+<%- contentFor('body') %>
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h2 class="mb-0">All Categories</h2>
+    <a href="/categories/add" class="btn btn-primary">Add Category</a>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (categories && categories.length > 0) { %>
+            <% categories.forEach((category) => { %>
+              <tr>
+                <td><%= category.category_id %></td>
+                <td><%= category.name %></td>
+                <td>
+                  <div class="d-flex gap-2">
+                    <a href="/categories/<%= category.category_id %>/edit" class="btn btn-sm btn-warning">Edit</a>
+                    <form action="/categories/<%= category.category_id %>/delete" method="POST">
+                      <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+            <tr>
+              <td colspan="3" class="text-center">No categories found.</td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 

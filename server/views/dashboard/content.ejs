@@ -7,7 +7,7 @@
   </div>
   <div class="col-md-4">
     <div class="card stat-card">
-      <div class="stat-value">€<%= parseFloat(totalRevenue).toFixed(2) %></div>
+      <div class="stat-value">€<%= totalRevenue.toFixed(2) %></div>
       <div class="stat-label">Total Revenue</div>
     </div>
   </div>
@@ -73,12 +73,12 @@
             </thead>
             <tbody>
               <% if (recentOrders && recentOrders.length > 0) { %>
-                <% recentOrders.forEach(order => { %>
+                <% recentOrders.forEach((order) => { %>
                   <tr>
                     <td><%= order.order_id %></td>
                     <td><%= order.customer_name %></td>
                     <td><%= order.kiosk_name %></td>
-                    <td>€<%= order.total_price %></td>
+                    <td>€<%= Number(order.total_price).toFixed(2) %></td>
                     <td>
                       <% 
                         let badgeClass = 'bg-secondary';

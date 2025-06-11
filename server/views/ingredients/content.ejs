@@ -29,7 +29,7 @@
                   <% } %>
                 </td>
                 <td><%= ingredient.name %></td>
-                <td>€<%= ingredient.price %></td>
+                <td>€<%= Number(ingredient.price).toFixed(2) %></td>
                 <td><%= ingredient.category %></td>
                 <td>
                   <div class="d-flex gap-2">

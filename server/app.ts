@@ -1,20 +1,26 @@
 import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
+import expressLayouts from 'express-ejs-layouts';
 dotenv.config();
 
 const app = express();
 const port = 3000;
 
-// Zeg tegen Express: “We gaan EJS gebruiken voor views/templates”
+// Configure EJS
 app.set('view engine', 'ejs');
-// Zeg ook waar de .ejs bestanden zich bevinden
 app.set('views', path.join(__dirname, 'views'));
 
-// Maak de map `public` beschikbaar voor CSS, afbeeldingen, etc.
+// Use express-ejs-layouts
+app.use(expressLayouts);
+app.set('layout', 'layouts/main'); // Set the default layout
+app.set('layout extractScripts', true);
+app.set('layout extractStyles', true);
+
+// Make the `public` directory available for CSS, images, etc.
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Hiermee kan je formulierdata (POST requests) uitlezen
+// Parse form data (POST requests)
 app.use(express.urlencoded({ extended: true }));
 
 // Routes importeren (bijvoorbeeld ingrediëntenlijst)
