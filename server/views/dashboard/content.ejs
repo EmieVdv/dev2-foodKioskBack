@@ -1,19 +1,19 @@
 <div class="row">
   <div class="col-md-4">
-    <div class="card stat-card">
-      <div class="stat-value"><%= todayOrdersCount %></div>
-      <div class="stat-label">Orders Today</div>
+    <div class="card border-dark text-center p-4">
+      <div class="display-5 fw-bold mb-2 text-muted"><%= todayOrdersCount %></div>
+      <div class="text-muted">Orders Today</div>
     </div>
   </div>
   <div class="col-md-4">
-    <div class="card stat-card">
-      <div class="stat-value">€<%= totalRevenue.toFixed(2) %></div>
-      <div class="stat-label">Total Revenue</div>
+    <div class="card border-dark text-center p-4">
+      <div class="display-5 fw-bold mb-2 text-muted">€<%= totalRevenue.toFixed(2) %></div>
+      <div class="text-muted">Total Revenue</div>
     </div>
   </div>
   <div class="col-md-4">
-    <div class="card stat-card">
-      <div class="stat-value">
+    <div class="card border-dark text-center p-4">
+      <div class="display-5 fw-bold mb-2 text-muted">
         <% 
           let totalOrders = 0;
           ordersByStatus.forEach(item => {
@@ -22,15 +22,15 @@
         %>
         <%= totalOrders %>
       </div>
-      <div class="stat-label">Total Orders</div>
+      <div class="text-muted">Total Orders</div>
     </div>
   </div>
 </div>
 
 <div class="row mt-4">
   <div class="col-md-8">
-    <div class="card">
-      <div class="card-header">
+    <div class="card border-dark">
+      <div class="card-header bg-dark text-muted">
         <h5 class="card-title mb-0">Monthly Orders & Revenue</h5>
       </div>
       <div class="card-body">
@@ -39,8 +39,8 @@
     </div>
   </div>
   <div class="col-md-4">
-    <div class="card">
-      <div class="card-header">
+    <div class="card border-dark">
+      <div class="card-header bg-dark text-white">
         <h5 class="card-title mb-0">Orders by Status</h5>
       </div>
       <div class="card-body">
@@ -52,8 +52,8 @@
 
 <div class="row mt-4">
   <div class="col-12">
-    <div class="card">
-      <div class="card-header d-flex justify-content-between align-items-center">
+    <div class="card border-dark">
+      <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
         <h5 class="card-title mb-0">Recent Orders</h5>
         <a href="/orders" class="btn btn-sm btn-primary">View All</a>
       </div>

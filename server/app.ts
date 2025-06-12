@@ -22,6 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Parse form data (POST requests)
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json()); // Add this line to parse JSON request bodies
 
 // Routes importeren (bijvoorbeeld ingrediëntenlijst)
 import dashboardRoutes from './routes/dashboard';
@@ -37,6 +38,10 @@ app.use('/categories', categoryRoutes);
 
 import ordersRoutes from './routes/orders';
 app.use('/orders', ordersRoutes);
+
+// Import and use API routes
+import apiRoutes from './routes/api';
+app.use('/api', apiRoutes);
 
 // Als iemand naar de hoofdpagina / gaat, doorsturen naar /dashboard
 app.get('/', (req, res) => {
