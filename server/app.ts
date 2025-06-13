@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import expressLayouts from 'express-ejs-layouts';
 dotenv.config();
 
+
 const app = express();
 const PORT : number = parseInt(<string>process.env.PORT, 10) || 3000;
 
