@@ -3,8 +3,8 @@
 	"builds": [{ "src": "/server/app.ts", "use": "@vercel/node" }],
 	"routes": [{ "src": "/(.*)", "dest": "/server/app.ts" }],
 	"env": {
-		"POSTGRES_URL": "@postgres_url",
-		"SUPABASE_URL": "@supabase_url",
-		"SUPABASE_ANON_KEY": "@supabase_anon_key"
+		"POSTGRES_URL": "@POSTGRES_URL",
+		"SUPABASE_URL": "@SUPABASE_URL",
+		"SUPABASE_ANON_KEY": "@SUPABASE_ANON_KEY"
 	}
 }
