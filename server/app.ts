@@ -5,7 +5,7 @@ import expressLayouts from 'express-ejs-layouts';
 dotenv.config();
 
 const app = express();
-const port = 3000;
+const PORT : number = parseInt(<string>process.env.PORT, 10) || 3000;
 
 // Configure EJS
 app.set('view engine', 'ejs');
@@ -49,6 +49,6 @@ app.get('/', (req, res) => {
 });
 
 // Start de server
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
